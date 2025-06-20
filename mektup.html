@@ -54,6 +54,7 @@
       font-size: 24px;
       color: red;
       animation: fall 8s linear infinite;
+      white-space: nowrap;
     }
 
     @keyframes fall {
@@ -70,7 +71,7 @@
       transform: translate(-50%, -50%);
       z-index: 10000;
       text-align: center;
-      animation: scaleFlower 6s ease-in-out forwards;
+      animation: scaleFlower 8s ease-in-out forwards;
     }
 
     @keyframes scaleFlower {
@@ -115,8 +116,8 @@
     }
 
     .modal-text {
-      font-size: 1.4em;
-      line-height: 1.9em;
+      font-size: 1.6em;
+      line-height: 2em;
       color: #2c3e50;
       font-family: 'Quicksand', sans-serif;
     }
@@ -151,6 +152,7 @@
   </div>
   <div class="message-modal" id="modal"></div>
   <script>
+    const names = ["❤️ Ensar", "🖤 Zehra"];
     const messages = [
       "Bazen kelimeler yetmez duyguları tarif etmeye. Ama yine de bu mektuba dökülen her kelime kalbimden gelen bir parçadır.",
       "Varlığın hayatıma ışık gibi doğdu. Sesinle huzur buldum, bakışlarınla kendimi buldum. Uzaklar sadece kilometrelerle sınırlı, kalbim her an seninle.",
@@ -159,8 +161,10 @@
       "Sonsuz sevgilerimle,<br>Ensar 💌",
       "SENİİİ ÇOKKKK SEVİYORUMMM 💞 AŞIĞIMMM SANA 💘 HAYATIMIN ANLAMIII 💖 KURBAN OLURUMMM SANA 😍"
     ];
+
     const modal = document.getElementById("modal");
     let i = 0;
+
     function showModalMessage() {
       if (i < messages.length) {
         modal.innerHTML = `<div class='modal-text'>${messages[i]}</div>`;
@@ -169,11 +173,12 @@
         setTimeout(() => {
           modal.classList.remove("active");
           setTimeout(showModalMessage, 1500);
-        }, 5000);
+        }, 5500);
       } else {
         showFinalQuestion();
       }
     }
+
     function showFinalQuestion() {
       modal.innerHTML = `<div class='modal-text'>Bana ne kadar güveniyorsun?</div>
         <div style='margin-top: 20px;'>
@@ -184,6 +189,7 @@
         </div>`;
       modal.classList.add("active");
     }
+
     function trustResponse(val) {
       let msg = "";
       if (val < 60) msg = "Gülüm... zamanla inşallah 💗";
@@ -192,6 +198,7 @@
       modal.innerHTML = `<div class='modal-text'>${msg}</div>`;
       setTimeout(() => showSecondQuestion(), 3000);
     }
+
     function showSecondQuestion() {
       modal.innerHTML = `<div class='modal-text'>Benimle ne olursa olsun darıldığında her şeyi paylaşacaksın, tamam mı?</div>
         <div style='margin-top: 15px;'>
@@ -199,11 +206,13 @@
           <button onclick='growNoButton(this)'>Hayır</button>
         </div>`;
     }
+
     function growNoButton(btn) {
       let size = parseInt(btn.style.fontSize || "16") + 10;
       btn.style.fontSize = `${size}px`;
       if (size > 40) btn.innerText = "Artık Evet De 😅";
     }
+
     function finalAnswer() {
       modal.innerHTML = `<div class='modal-text'>
         Kocanıza danışma hattı:<br><br>
@@ -213,17 +222,18 @@
         Kocanıza ulaşmadığın takdirde başın belaya girer 😈
       </div>`;
     }
+
     window.addEventListener('load', () => {
       setTimeout(() => {
         document.querySelector('.intro-flower').style.display = 'none';
         showModalMessage();
-      }, 6000);
+      }, 8000);
 
       const heartContainer = document.getElementById("hearts");
       setInterval(() => {
         const heart = document.createElement("div");
         heart.className = "heart";
-        heart.innerText = Math.random() < 0.5 ? "❤️" : "🖤";
+        heart.innerText = names[Math.floor(Math.random() * names.length)];
         heart.style.left = Math.random() * 100 + "vw";
         heart.style.fontSize = (Math.random() * 20 + 20) + "px";
         heartContainer.appendChild(heart);

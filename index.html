@@ -31,7 +31,9 @@
       position: absolute;
       top: -40px;
       font-size: 24px;
+      color: #e74c3c;
       animation: fall 8s linear infinite;
+      white-space: nowrap;
     }
 
     @keyframes fall {
@@ -114,10 +116,16 @@
 
   <script>
     const heartContainer = document.getElementById("hearts");
+
     setInterval(() => {
       const heart = document.createElement("div");
       heart.className = "heart";
-      heart.innerText = Math.random() < 0.5 ? "❤️" : "🖤";
+
+      const emoji = Math.random() < 0.5 ? "❤️" : "🖤";
+      const useName = Math.random() < 0.4; // %40 olasılıkla isimli olacak
+      const name = Math.random() < 0.5 ? "Ensar" : "Zehra";
+      heart.innerText = useName ? `${emoji} ${name}` : emoji;
+
       heart.style.left = Math.random() * 100 + "vw";
       heart.style.fontSize = (Math.random() * 20 + 20) + "px";
       heartContainer.appendChild(heart);
