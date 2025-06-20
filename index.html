@@ -111,13 +111,15 @@
       setTimeout(() => heart.remove(), 8000);
     }, 300);
 
-    // Kullanıcı tıklamasıyla sesi aç
-    document.addEventListener('click', () => {
-      const audio = document.getElementById('bgmusic');
-      if (audio.muted) {
-        audio.muted = false;
-        audio.play();
-      }
+    // Gelişmiş ses oynatma: kullanıcı tıklaması sonrası sesi aç
+    window.addEventListener('DOMContentLoaded', () => {
+      document.body.addEventListener('click', () => {
+        const audio = document.getElementById('bgmusic');
+        if (audio.muted) {
+          audio.muted = false;
+          audio.play().catch((e) => console.log("Ses başlatılamadı:", e));
+        }
+      });
     });
   </script>
 </body>
