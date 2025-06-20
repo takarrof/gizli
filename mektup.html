@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mektubum Sana</title>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --main-color: #ff6b81;
+      --bg-overlay: rgba(255, 192, 203, 0.3);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Quicksand', sans-serif;
+      background: linear-gradient(rgba(255, 192, 203, 0.8), rgba(255, 182, 193, 0.8)), url('https://images.unsplash.com/photo-1503264116251-35a269479413?auto=format&fit=crop&w=1950&q=80') no-repeat center center fixed;
+      background-size: cover;
+      position: relative;
+      min-height: 100vh;
+      overflow-x: hidden;
+      color: #2d2d2d;
+    }
+
+    .overlay {
+      background: var(--bg-overlay);
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+
+    .heart-fall {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: 1;
+      overflow: hidden;
+    }
+
+    .heart {
+      position: absolute;
+      top: -50px;
+      font-size: 24px;
+      color: red;
+      animation: fall 8s linear infinite;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(110vh);
+        opacity: 0;
+      }
+    }
+
+    .intro-flower {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 10000;
+      text-align: center;
+      animation: scaleFlower 6s ease-in-out forwards;
+    }
+
+    @keyframes scaleFlower {
+      0% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+      40% { transform: translate(-50%, -50%) scale(1.4); opacity: 1; }
+      100% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+    }
+
+    .intro-flower img {
+      width: 200px;
+      border-radius: 15px;
+      box-shadow: 0 0 30px rgba(0,0,0,0.3);
+    }
+
+    .intro-text {
+      margin-top: 15px;
+      font-size: 1.9em;
+      color: #c0392b;
+      font-family: 'Great Vibes', cursive;
+      text-shadow: 1px 1px 5px white;
+    }
+
+    .message-modal {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: rgba(255, 255, 255, 0.95);
+      padding: 50px;
+      border-radius: 30px;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+      max-width: 800px;
+      width: 90%;
+      text-align: center;
+      z-index: 1000;
+      animation: fadeInUp 1s ease;
+    }
+
+    .message-modal.active {
+      display: block;
+    }
+
+    .modal-text {
+      font-size: 1.4em;
+      line-height: 1.9em;
+      color: #2c3e50;
+      font-family: 'Quicksand', sans-serif;
+    }
+
+    button {
+      padding: 12px 24px;
+      margin: 12px;
+      font-size: 1.05em;
+      border-radius: 30px;
+      border: none;
+      background-color: var(--main-color);
+      color: white;
+      cursor: pointer;
+      transition: transform 0.3s ease, background-color 0.3s;
+    }
+
+    button:hover {
+      transform: scale(1.1);
+      background-color: #e74c3c;
+    }
+  </style>
+</head>
+<body>
+  <div class="overlay"></div>
+  <div class="heart-fall" id="hearts"></div>
+  <audio autoplay loop>
+    <source src="https://cdn.pixabay.com/audio/2022/03/15/audio_b6fcf962b2.mp3" type="audio/mp3">
+  </audio>
+  <div class="intro-flower">
+    <img src="https://cdn.ikost.com/3090/urunler/63.jpg" alt="Gül">
+    <div class="intro-text">Bu gül sana hayatımmm 💖</div>
+  </div>
+  <div class="message-modal" id="modal"></div>
+  <script>
+    const messages = [
+      "Bazen kelimeler yetmez duyguları tarif etmeye. Ama yine de bu mektuba dökülen her kelime kalbimden gelen bir parçadır.",
+      "Varlığın hayatıma ışık gibi doğdu. Sesinle huzur buldum, bakışlarınla kendimi buldum. Uzaklar sadece kilometrelerle sınırlı, kalbim her an seninle.",
+      "Seninle geçirdiğim her an, hatıralarımın en kıymetli yerine kazındı. Gülüşün, içtenliğin ve sevgin bana yaşamayı öğretti.",
+      "Bu yüzden... seni 2030 yılında almaya gelicem. O gün geldiğinde ellerini tutup, 'evet' diyeceğimiz günü yaşayacağız 💍",
+      "Sonsuz sevgilerimle,<br>Ensar 💌",
+      "SENİİİ ÇOKKKK SEVİYORUMMM 💞 AŞIĞIMMM SANA 💘 HAYATIMIN ANLAMIII 💖 KURBAN OLURUMMM SANA 😍"
+    ];
+    const modal = document.getElementById("modal");
+    let i = 0;
+    function showModalMessage() {
+      if (i < messages.length) {
+        modal.innerHTML = `<div class='modal-text'>${messages[i]}</div>`;
+        modal.classList.add("active");
+        i++;
+        setTimeout(() => {
+          modal.classList.remove("active");
+          setTimeout(showModalMessage, 1500);
+        }, 5000);
+      } else {
+        showFinalQuestion();
+      }
+    }
+    function showFinalQuestion() {
+      modal.innerHTML = `<div class='modal-text'>Bana ne kadar güveniyorsun?</div>
+        <div style='margin-top: 20px;'>
+          <button onclick='trustResponse(50)'>%50</button>
+          <button onclick='trustResponse(70)'>%70</button>
+          <button onclick='trustResponse(90)'>%90</button>
+          <button onclick='trustResponse(100)'>%100</button>
+        </div>`;
+      modal.classList.add("active");
+    }
+    function trustResponse(val) {
+      let msg = "";
+      if (val < 60) msg = "Gülüm... zamanla inşallah 💗";
+      else if (val < 90) msg = "Gittikçe yaklaşıyoruz 🥰";
+      else msg = "Güvenini kazandığıma şükrediyorum. Seni çoook seviyorum hayatım 💖";
+      modal.innerHTML = `<div class='modal-text'>${msg}</div>`;
+      setTimeout(() => showSecondQuestion(), 3000);
+    }
+    function showSecondQuestion() {
+      modal.innerHTML = `<div class='modal-text'>Benimle ne olursa olsun darıldığında her şeyi paylaşacaksın, tamam mı?</div>
+        <div style='margin-top: 15px;'>
+          <button onclick='finalAnswer(true)' style='margin-right: 10px;'>Evet</button>
+          <button onclick='growNoButton(this)'>Hayır</button>
+        </div>`;
+    }
+    function growNoButton(btn) {
+      let size = parseInt(btn.style.fontSize || "16") + 10;
+      btn.style.fontSize = `${size}px`;
+      if (size > 40) btn.innerText = "Artık Evet De 😅";
+    }
+    function finalAnswer() {
+      modal.innerHTML = `<div class='modal-text'>
+        Kocanıza danışma hattı:<br><br>
+        📞 533 053 7232<br>
+        📱 WhatsApp: 🤍<br>
+        📸 Instagram: @ensar_trn<br><br>
+        Kocanıza ulaşmadığın takdirde başın belaya girer 😈
+      </div>`;
+    }
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        document.querySelector('.intro-flower').style.display = 'none';
+        showModalMessage();
+      }, 6000);
+
+      const heartContainer = document.getElementById("hearts");
+      setInterval(() => {
+        const heart = document.createElement("div");
+        heart.className = "heart";
+        heart.innerText = Math.random() < 0.5 ? "❤️" : "🖤";
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.fontSize = (Math.random() * 20 + 20) + "px";
+        heartContainer.appendChild(heart);
+        setTimeout(() => heart.remove(), 8000);
+      }, 300);
+    });
+  </script>
+</body>
+</html>
