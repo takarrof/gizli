@@ -87,7 +87,7 @@
   </style>
 </head>
 <body>
-  <audio autoplay loop>
+  <audio id="bgmusic" autoplay muted loop>
     <source src="https://takarrof.github.io/gizli/mabel-ahu.mp3" type="audio/mp3">
   </audio>
 
@@ -110,6 +110,15 @@
       heartContainer.appendChild(heart);
       setTimeout(() => heart.remove(), 8000);
     }, 300);
+
+    // Kullanıcı tıklamasıyla sesi aç
+    document.addEventListener('click', () => {
+      const audio = document.getElementById('bgmusic');
+      if (audio.muted) {
+        audio.muted = false;
+        audio.play();
+      }
+    });
   </script>
 </body>
 </html>
